@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>YREP — Video Editor Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:    #0A1628;
+      --deep:    #0D1F3C;
+      --blue:    #1E5FFF;
+      --bright:  #4D8AFF;
+      --ice:     #E8F0FF;
+      --white:   #FFFFFF;
+      --muted:   #8B9BB4;
+      --card-bg: #111D35;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--navy);
+      color: var(--white);
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.2rem 5%;
+      background: rgba(10, 22, 40, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(30, 95, 255, 0.15);
+    }
+    .nav-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2rem;
+      letter-spacing: 0.1em;
+      color: var(--white);
+      text-decoration: none;
+    }
+    .nav-logo span { color: var(--blue); }
+    nav ul { list-style: none; display: flex; gap: 2.5rem; }
+    nav ul a {
+      text-decoration: none; color: var(--muted);
+      font-size: 0.85rem; font-weight: 500; letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    nav ul a:hover { color: var(--white); }
+    .nav-cta {
+      background: var(--blue); color: var(--white) !important;
+      padding: 0.5rem 1.2rem; border-radius: 4px;
+      transition: background 0.2s !important;
+    }
+    .nav-cta:hover { background: var(--bright) !important; color: var(--white) !important; }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column;
+      justify-content: center; align-items: flex-start;
+      padding: 0 5%;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* animated grid background */
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(30,95,255,0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(30,95,255,0.06) 1px, transparent 1px);
+      background-size: 60px 60px;
+      animation: gridDrift 20s linear infinite;
+    }
+    @keyframes gridDrift {
+      from { background-position: 0 0; }
+      to   { background-position: 60px 60px; }
+    }
+
+    /* scan line */
+    .hero::after {
+      content: '';
+      position: absolute; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, transparent, var(--blue), transparent);
+      animation: scan 4s ease-in-out infinite;
+      opacity: 0.6;
+    }
+    @keyframes scan {
+      0%   { top: 0;    opacity: 0; }
+      10%  { opacity: 0.6; }
+      90%  { opacity: 0.6; }
+      100% { top: 100%; opacity: 0; }
+    }
+
+    .hero-tag {
+      font-size: 0.78rem; font-weight: 600; letter-spacing: 0.25em;
+      text-transform: uppercase; color: var(--blue);
+      background: rgba(30,95,255,0.12);
+      padding: 0.35rem 0.9rem; border-radius: 20px;
+      border: 1px solid rgba(30,95,255,0.3);
+      margin-bottom: 1.5rem;
+      position: relative; z-index: 1;
+    }
+
+    .hero-name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(5rem, 18vw, 16rem);
+      line-height: 0.9;
+      letter-spacing: 0.04em;
+      position: relative; z-index: 1;
+      background: linear-gradient(135deg, #fff 40%, var(--bright) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-sub {
+      font-size: clamp(1rem, 2vw, 1.25rem);
+      color: var(--muted);
+      font-weight: 300;
+      margin-top: 1.2rem;
+      max-width: 480px;
+      line-height: 1.7;
+      position: relative; z-index: 1;
+    }
+    .hero-sub strong { color: var(--white); font-weight: 500; }
+
+    .hero-btns {
+      display: flex; gap: 1rem; margin-top: 2.5rem;
+      position: relative; z-index: 1;
+    }
+    .btn-primary {
+      background: var(--blue); color: var(--white);
+      padding: 0.85rem 2rem; border-radius: 5px;
+      font-weight: 600; font-size: 0.9rem; letter-spacing: 0.04em;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.15s;
+      display: inline-flex; align-items: center; gap: 0.5rem;
+    }
+    .btn-primary:hover { background: var(--bright); transform: translateY(-2px); }
+    .btn-outline {
+      border: 1.5px solid rgba(30,95,255,0.5); color: var(--ice);
+      padding: 0.85rem 2rem; border-radius: 5px;
+      font-weight: 500; font-size: 0.9rem; letter-spacing: 0.04em;
+      text-decoration: none;
+      transition: border-color 0.2s, color 0.2s, transform 0.15s;
+    }
+    .btn-outline:hover { border-color: var(--blue); color: var(--white); transform: translateY(-2px); }
+
+    .hero-scroll {
+      position: absolute; bottom: 2.5rem; left: 5%;
+      display: flex; align-items: center; gap: 0.6rem;
+      color: var(--muted); font-size: 0.78rem; letter-spacing: 0.12em;
+      text-transform: uppercase; z-index: 1;
+    }
+    .scroll-line {
+      width: 40px; height: 1px; background: var(--blue);
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+    @keyframes scrollPulse {
+      0%, 100% { width: 40px; opacity: 1; }
+      50% { width: 70px; opacity: 0.5; }
+    }
+
+    /* ── STATS BAR ── */
+    .stats-bar {
+      background: var(--card-bg);
+      border-top: 1px solid rgba(30,95,255,0.15);
+      border-bottom: 1px solid rgba(30,95,255,0.15);
+      display: flex; justify-content: center;
+      padding: 2rem 5%;
+      gap: 4rem;
+      flex-wrap: wrap;
+    }
+    .stat { text-align: center; }
+    .stat-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.8rem; color: var(--blue); letter-spacing: 0.05em;
+    }
+    .stat-label { font-size: 0.75rem; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; margin-top: 0.2rem; }
+
+    /* ── SECTION SHARED ── */
+    section { padding: 6rem 5%; }
+    .section-tag {
+      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.28em;
+      text-transform: uppercase; color: var(--blue);
+      margin-bottom: 0.8rem; display: block;
+    }
+    .section-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      letter-spacing: 0.04em;
+      line-height: 1;
+      margin-bottom: 1rem;
+    }
+    .section-sub { color: var(--muted); font-size: 1rem; line-height: 1.7; max-width: 540px; }
+
+    /* ── ABOUT ── */
+    .about { background: var(--deep); }
+    .about-inner {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 5rem; align-items: center;
+      max-width: 1100px; margin: 0 auto;
+    }
+    .about-visual {
+      position: relative;
+      aspect-ratio: 4/5;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .about-placeholder {
+      width: 100%; height: 100%;
+      background: linear-gradient(135deg, var(--card-bg) 0%, #0f2550 100%);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 1rem;
+    }
+    .avatar-ring {
+      width: 100px; height: 100px; border-radius: 50%;
+      border: 3px solid var(--blue);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.5rem; color: var(--blue);
+      background: rgba(30,95,255,0.08);
+    }
+    .about-placeholder p { color: var(--muted); font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; }
+    .about-badge {
+      position: absolute; bottom: 1.5rem; right: 1.5rem;
+      background: var(--blue); color: var(--white);
+      padding: 0.7rem 1.2rem; border-radius: 6px;
+      font-size: 0.8rem; font-weight: 600;
+    }
+    .about-text { }
+    .about-text p { color: var(--muted); line-height: 1.8; font-size: 0.95rem; margin-bottom: 1rem; }
+    .skills-grid { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1.5rem; }
+    .skill-tag {
+      background: rgba(30,95,255,0.1); border: 1px solid rgba(30,95,255,0.25);
+      color: var(--ice); padding: 0.4rem 0.9rem; border-radius: 20px;
+      font-size: 0.78rem; font-weight: 500;
+    }
+
+    /* ── WORK ── */
+    .work { background: var(--navy); }
+    .work-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 3rem; flex-wrap: wrap; gap: 1rem; }
+
+    /* Upload CTA */
+    .upload-area {
+      background: rgba(30,95,255,0.06);
+      border: 2px dashed rgba(30,95,255,0.3);
+      border-radius: 10px;
+      padding: 2rem; text-align: center;
+      margin-bottom: 2.5rem;
+      cursor: pointer; transition: border-color 0.2s, background 0.2s;
+    }
+    .upload-area:hover { border-color: var(--blue); background: rgba(30,95,255,0.1); }
+    .upload-icon { font-size: 2rem; margin-bottom: 0.5rem; }
+    .upload-area p { color: var(--muted); font-size: 0.88rem; }
+    .upload-area strong { color: var(--white); }
+    #fileInput { display: none; }
+
+    /* Video grid */
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+    .video-card {
+      background: var(--card-bg);
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid rgba(30,95,255,0.1);
+      transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s;
+      cursor: pointer;
+    }
+    .video-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(30,95,255,0.4);
+      box-shadow: 0 20px 50px rgba(30,95,255,0.15);
+    }
+    .video-thumb {
+      position: relative; aspect-ratio: 16/9;
+      background: #0b1830;
+      overflow: hidden;
+    }
+    .video-thumb video {
+      width: 100%; height: 100%; object-fit: cover;
+      display: block;
+    }
+    .play-overlay {
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      background: rgba(10,22,40,0.45);
+      transition: background 0.2s;
+    }
+    .video-card:hover .play-overlay { background: rgba(10,22,40,0.2); }
+    .play-btn {
+      width: 54px; height: 54px; border-radius: 50%;
+      background: var(--blue);
+      display: flex; align-items: center; justify-content: center;
+      transition: transform 0.2s, background 0.2s;
+    }
+    .video-card:hover .play-btn { transform: scale(1.1); background: var(--bright); }
+    .play-btn svg { width: 20px; height: 20px; fill: white; margin-left: 3px; }
+    .video-info { padding: 1.1rem 1.2rem 1.3rem; }
+    .video-title { font-weight: 600; font-size: 0.95rem; margin-bottom: 0.3rem; }
+    .video-meta { font-size: 0.78rem; color: var(--muted); }
+    .video-category {
+      display: inline-block;
+      background: rgba(30,95,255,0.15); color: var(--bright);
+      padding: 0.2rem 0.6rem; border-radius: 12px;
+      font-size: 0.7rem; font-weight: 600; letter-spacing: 0.05em;
+      text-transform: uppercase; margin-bottom: 0.5rem;
+    }
+
+    /* ── LIGHTBOX ── */
+    .lightbox {
+      display: none;
+      position: fixed; inset: 0; z-index: 200;
+      background: rgba(5,12,25,0.96);
+      align-items: center; justify-content: center;
+      padding: 2rem;
+    }
+    .lightbox.open { display: flex; }
+    .lightbox-inner { position: relative; width: 100%; max-width: 900px; }
+    .lightbox-inner video {
+      width: 100%; border-radius: 10px;
+      box-shadow: 0 0 80px rgba(30,95,255,0.3);
+    }
+    .lightbox-close {
+      position: absolute; top: -2.5rem; right: 0;
+      background: none; border: none;
+      color: var(--muted); font-size: 1.8rem; cursor: pointer;
+      transition: color 0.2s;
+    }
+    .lightbox-close:hover { color: var(--white); }
+
+    /* ── SERVICES ── */
+    .services { background: var(--deep); }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 1.5rem; margin-top: 3rem;
+    }
+    .service-card {
+      background: var(--card-bg);
+      border: 1px solid rgba(30,95,255,0.12);
+      border-radius: 10px; padding: 2rem 1.8rem;
+      transition: border-color 0.25s, transform 0.25s;
+    }
+    .service-card:hover { border-color: rgba(30,95,255,0.4); transform: translateY(-4px); }
+    .service-icon {
+      font-size: 2rem; margin-bottom: 1.2rem;
+      display: block;
+    }
+    .service-card h3 { font-size: 1.05rem; font-weight: 600; margin-bottom: 0.6rem; }
+    .service-card p { color: var(--muted); font-size: 0.88rem; line-height: 1.7; }
+
+    /* ── CONTACT ── */
+    .contact { background: var(--navy); }
+    .contact-inner {
+      max-width: 700px; margin: 0 auto; text-align: center;
+    }
+    .contact-inner .section-sub { margin: 0 auto 3rem; }
+    .contact-cards { display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap; margin-bottom: 3rem; }
+    .contact-card {
+      background: var(--card-bg);
+      border: 1px solid rgba(30,95,255,0.15);
+      border-radius: 10px; padding: 1.5rem 2.2rem;
+      display: flex; align-items: center; gap: 1rem;
+      text-decoration: none; color: var(--white);
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .contact-card:hover { border-color: var(--blue); transform: translateY(-3px); }
+    .contact-card-icon { font-size: 1.5rem; }
+    .contact-card-label { font-size: 0.7rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; }
+    .contact-card-value { font-size: 0.9rem; font-weight: 500; margin-top: 0.1rem; }
+
+    .contact-form { text-align: left; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+    .form-group { display: flex; flex-direction: column; gap: 0.4rem; margin-bottom: 1rem; }
+    .form-group label { font-size: 0.78rem; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; }
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      background: var(--card-bg);
+      border: 1px solid rgba(30,95,255,0.2);
+      border-radius: 6px; color: var(--white);
+      padding: 0.75rem 1rem; font-size: 0.9rem;
+      font-family: 'Inter', sans-serif;
+      transition: border-color 0.2s;
+      outline: none;
+    }
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus { border-color: var(--blue); }
+    .form-group textarea { resize: vertical; min-height: 120px; }
+    .form-group select option { background: var(--deep); }
+    .form-submit {
+      width: 100%; padding: 1rem;
+      background: var(--blue); color: var(--white);
+      border: none; border-radius: 6px;
+      font-size: 0.95rem; font-weight: 600; letter-spacing: 0.04em;
+      cursor: pointer; transition: background 0.2s;
+      font-family: 'Inter', sans-serif;
+    }
+    .form-submit:hover { background: var(--bright); }
+    .form-success {
+      display: none; text-align: center; padding: 2rem;
+      background: rgba(30,95,255,0.08); border-radius: 8px;
+      border: 1px solid rgba(30,95,255,0.2);
+      color: var(--ice);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--deep);
+      border-top: 1px solid rgba(30,95,255,0.12);
+      padding: 2.5rem 5%;
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 1rem;
+    }
+    .footer-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.8rem; color: var(--white); letter-spacing: 0.1em;
+    }
+    .footer-logo span { color: var(--blue); }
+    footer p { font-size: 0.8rem; color: var(--muted); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav ul { display: none; }
+      .about-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+      .about-visual { aspect-ratio: 3/2; max-height: 280px; }
+      .form-row { grid-template-columns: 1fr; }
+      .stats-bar { gap: 2rem; }
+      .hero-btns { flex-direction: column; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .hero::before, .hero::after, .scroll-line { animation: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#home" class="nav-logo">YR<span>EP</span></a>
+  <ul>
+    <li><a href="#about">About</a></li>
+    <li><a href="#work">Work</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#contact" class="nav-cta">Hire Me</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-tag">✦ Available for Projects</div>
+  <h1 class="hero-name">YREP</h1>
+  <p class="hero-sub">
+    <strong>Perry Tonkumor</strong> — Video Editor crafting cinematic stories,
+    viral cuts, and visual moments that make people stop scrolling.
+  </p>
+  <div class="hero-btns">
+    <a href="#work" class="btn-primary">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
+      Watch My Work
+    </a>
+    <a href="#contact" class="btn-outline">Get in Touch</a>
+  </div>
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    Scroll to explore
+  </div>
+</section>
+
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="stat">
+    <div class="stat-num">5+</div>
+    <div class="stat-label">Projects Completed</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">100%</div>
+    <div class="stat-label">Passion Driven</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">24H</div>
+    <div class="stat-label">Response Time</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">∞</div>
+    <div class="stat-label">Creative Vision</div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-inner">
+    <div class="about-visual">
+      <div class="about-placeholder">
+        <div class="avatar-ring">Y</div>
+        <p>Perry · YREP</p>
+      </div>
+      <div class="about-badge">✦ Video Editor</div>
+    </div>
+    <div class="about-text">
+      <span class="section-tag">About Me</span>
+      <h2 class="section-title">The Person Behind the Edit</h2>
+      <p>
+        I'm Perry — a passionate video editor who goes by <strong>YREP</strong>.
+        What started as pure love for storytelling through footage has grown into a
+        real craft. I live for the moment a sequence clicks, when the music hits
+        right with the cut and suddenly something ordinary becomes unforgettable.
+      </p>
+      <p>
+        Every project I take on gets my full creative energy. Whether it's a music
+        video, a short film, a social media reel, or a brand story — I treat it
+        like it matters. Because it does.
+      </p>
+      <p style="color: var(--muted); font-size: 0.88rem;">
+        Based in Nigeria &nbsp;·&nbsp; Open to remote collaborations worldwide
+      </p>
+      <div class="skills-grid">
+        <span class="skill-tag">Music Videos</span>
+        <span class="skill-tag">Short Films</span>
+        <span class="skill-tag">Social Reels</span>
+        <span class="skill-tag">Color Grading</span>
+        <span class="skill-tag">Motion Graphics</span>
+        <span class="skill-tag">Brand Content</span>
+        <span class="skill-tag">Event Edits</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WORK -->
+<section class="work" id="work">
+  <div class="work-header">
+    <div>
+      <span class="section-tag">Portfolio</span>
+      <h2 class="section-title">Selected Work</h2>
+    </div>
+    <p class="section-sub" style="max-width: 320px; font-size: 0.88rem;">
+      Click any project to watch. You can also add your own videos below.
+    </p>
+  </div>
+
+  <!-- Upload area -->
+  <div class="upload-area" onclick="document.getElementById('fileInput').click()">
+    <div class="upload-icon">🎬</div>
+    <p><strong>Add a video to your portfolio</strong></p>
+    <p>Click to upload &nbsp;·&nbsp; MP4, MOV, AVI supported</p>
+  </div>
+  <input type="file" id="fileInput" accept="video/*" multiple />
+
+  <div class="video-grid" id="videoGrid">
+    <!-- Videos injected by JS -->
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <span class="section-tag">What I Offer</span>
+  <h2 class="section-title">Services</h2>
+  <p class="section-sub">Whatever your video needs — I've got the cut for it.</p>
+  <div class="services-grid">
+    <div class="service-card">
+      <span class="service-icon">🎵</span>
+      <h3>Music Video Editing</h3>
+      <p>Energetic cuts, beat-synced sequences, and a visual story that matches the vibe of the track.</p>
+    </div>
+    <div class="service-card">
+      <span class="service-icon">🎬</span>
+      <h3>Short Film & Narrative</h3>
+      <p>Story-first editing that respects pacing, emotion, and the director's vision.</p>
+    </div>
+    <div class="service-card">
+      <span class="service-icon">📱</span>
+      <h3>Social Media Reels</h3>
+      <p>Fast, punchy, scroll-stopping edits for Instagram, TikTok, and YouTube Shorts.</p>
+    </div>
+    <div class="service-card">
+      <span class="service-icon">🎨</span>
+      <h3>Color Grading</h3>
+      <p>Cinematic color science — from natural corrections to full creative looks.</p>
+    </div>
+    <div class="service-card">
+      <span class="service-icon">✨</span>
+      <h3>Motion & Effects</h3>
+      <p>Transitions, lower thirds, titles, and light VFX that elevate the final product.</p>
+    </div>
+    <div class="service-card">
+      <span class="service-icon">📦</span>
+      <h3>Brand & Commercial</h3>
+      <p>Polished, professional videos that sell your brand and keep viewers watching.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="contact-inner">
+    <span class="section-tag">Let's Work Together</span>
+    <h2 class="section-title">Get In Touch</h2>
+    <p class="section-sub">Have a project? I'd love to hear about it. Reach out directly or fill the form below.</p>
+
+    <div class="contact-cards">
+      <a href="mailto:perrytonkumor@gmail.com" class="contact-card">
+        <div class="contact-card-icon">✉️</div>
+        <div>
+          <div class="contact-card-label">Email</div>
+          <div class="contact-card-value">perrytonkumor@gmail.com</div>
+        </div>
+      </a>
+      <a href="https://wa.me/2347049609552" target="_blank" class="contact-card">
+        <div class="contact-card-icon">📱</div>
+        <div>
+          <div class="contact-card-label">WhatsApp / Phone</div>
+          <div class="contact-card-value">+234 704 960 9552</div>
+        </div>
+      </a>
+    </div>
+
+    <div class="contact-form" id="contactForm">
+      <div class="form-row">
+        <div class="form-group">
+          <label>Your Name</label>
+          <input type="text" placeholder="John Doe" id="fname" />
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" placeholder="you@email.com" id="femail" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Project Type</label>
+        <select id="ftype">
+          <option value="">Select a service...</option>
+          <option>Music Video Editing</option>
+          <option>Short Film / Narrative</option>
+          <option>Social Media Reels</option>
+          <option>Color Grading</option>
+          <option>Brand / Commercial</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Tell Me About Your Project</label>
+        <textarea placeholder="Describe your vision, timeline, and any details..." id="fmsg"></textarea>
+      </div>
+      <button class="form-submit" onclick="submitForm()">Send Message ✦</button>
+    </div>
+    <div class="form-success" id="formSuccess">
+      <div style="font-size: 2rem; margin-bottom: 0.8rem;">🎬</div>
+      <strong>Message sent!</strong>
+      <p style="color: var(--muted); margin-top: 0.4rem;">Thanks for reaching out. I'll get back to you within 24 hours.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">YR<span>EP</span></div>
+  <p>© 2025 Perry Tonkumor · YREP · All rights reserved</p>
+  <p style="color: var(--blue); font-size: 0.78rem;">Crafted with passion ✦</p>
+</footer>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
+  <div class="lightbox-inner">
+    <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+    <video id="lightboxVideo" controls></video>
+  </div>
+</div>
+
+<script>
+  // Default portfolio items (the uploaded videos listed by name)
+  const defaultVideos = [
+    { title: "Edit 01 — 0608",         file: "0608.mp4",               category: "Edit" },
+    { title: "Edit 02 — 0521",         file: "0521.mp4",               category: "Edit" },
+    { title: "Soma Persona",           file: "soma_persona_.mp4",      category: "Music Video" },
+    { title: "Edit 03 — 0504",         file: "0504_1_.mp4",            category: "Edit" },
+    { title: "Alamin x Skazz",         file: "ALAMIN___SKAZZ-copy_3_.MP4", category: "Music Video" },
+  ];
+
+  const videoGrid = document.getElementById('videoGrid');
+  const extraVideos = []; // for user-uploaded blobs
+
+  function createCard(title, src, category, isBlob) {
+    const card = document.createElement('div');
+    card.className = 'video-card';
+    card.innerHTML = `
+      <div class="video-thumb">
+        <video src="${src}" preload="metadata" muted></video>
+        <div class="play-overlay">
+          <div class="play-btn">
+            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+        </div>
+      </div>
+      <div class="video-info">
+        <div class="video-category">${category}</div>
+        <div class="video-title">${title}</div>
+        <div class="video-meta">Click to watch</div>
+      </div>
+    `;
+    card.addEventListener('click', () => openLightbox(src));
+    return card;
+  }
+
+  // Render default videos as placeholder cards (no real files to load here in static HTML)
+  defaultVideos.forEach(v => {
+    const card = document.createElement('div');
+    card.className = 'video-card';
+    card.innerHTML = `
+      <div class="video-thumb" style="background: linear-gradient(135deg,#0d1f3c,#0f2550);">
+        <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.5rem;">
+          <div style="font-size:2.5rem;">🎬</div>
+          <span style="font-size:0.7rem;color:#4D8AFF;letter-spacing:0.1em;text-transform:uppercase;">${v.category}</span>
+        </div>
+        <div class="play-overlay">
+          <div class="play-btn">
+            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+        </div>
+      </div>
+      <div class="video-info">
+        <div class="video-category">${v.category}</div>
+        <div class="video-title">${v.title}</div>
+        <div class="video-meta">${v.file}</div>
+      </div>
+    `;
+    videoGrid.appendChild(card);
+  });
+
+  // File upload handler
+  document.getElementById('fileInput').addEventListener('change', function(e) {
+    const files = Array.from(e.target.files);
+    files.forEach(file => {
+      const url = URL.createObjectURL(file);
+      const name = file.name.replace(/\.[^.]+$/, '').replace(/[_-]/g, ' ');
+      const card = createCard(name, url, 'My Work', true);
+      videoGrid.insertBefore(card, videoGrid.firstChild);
+    });
+  });
+
+  // Lightbox
+  function openLightbox(src) {
+    const lb = document.getElementById('lightbox');
+    const vid = document.getElementById('lightboxVideo');
+    vid.src = src;
+    lb.classList.add('open');
+    vid.play().catch(() => {});
+  }
+  function closeLightbox(e) {
+    if (e && e.target !== document.getElementById('lightbox') && !e.target.classList.contains('lightbox-close')) return;
+    const lb = document.getElementById('lightbox');
+    const vid = document.getElementById('lightboxVideo');
+    vid.pause(); vid.src = '';
+    lb.classList.remove('open');
+  }
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox({ target: document.getElementById('lightbox') }); });
+
+  // Contact form
+  function submitForm() {
+    const name = document.getElementById('fname').value.trim();
+    const email = document.getElementById('femail').value.trim();
+    const msg = document.getElementById('fmsg').value.trim();
+    if (!name || !email || !msg) { alert('Please fill in all fields.'); return; }
+    document.getElementById('contactForm').style.display = 'none';
+    document.getElementById('formSuccess').style.display = 'block';
+  }
+
+  // Smooth active nav highlight on scroll
+  const sections = document.querySelectorAll('section[id], .stats-bar');
+  window.addEventListener('scroll', () => {
+    const links = document.querySelectorAll('nav ul a');
+    let cur = '';
+    sections.forEach(s => {
+      if (window.scrollY >= s.offsetTop - 120) cur = s.id || '';
+    });
+    links.forEach(l => {
+      l.style.color = l.getAttribute('href') === '#' + cur ? 'var(--white)' : '';
+    });
+  });
+</script>
+</body>
+</html>
